@@ -2,7 +2,6 @@ import React from 'react';
 import './MovieListPage.css';
 import Search from '../Search/Search';
 import MovieListElement from '../MovieListElement/MovieListElement';
-
 class MovieListPage extends React.Component {
   constructor(props) {
     super(props);
@@ -43,7 +42,11 @@ class MovieListPage extends React.Component {
     return (
       <>
         <Search onFilterTextChange={this.handleFilterTextChange} />
-        {movieList}
+        {movieList.length ? (
+          movieList
+        ) : (
+          <p>Sorry, no results match your search terms.</p>
+        )}
       </>
     );
   }
