@@ -1,0 +1,17 @@
+.MovieListElement-wrapper {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 25px;
+}
+
+.MovieListElement-image {
+  width: 80px;
+}
+
+.MovieListElement-contents-wrapper {
+  margin-left: 25px;
+}
+
+.MovieListElement-title {
+  margin-top: 0;
+}

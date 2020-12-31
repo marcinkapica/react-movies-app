@@ -1,0 +1,17 @@
+.MovieDetailPage-back-button {
+  font-size: 1rem;
+  margin-bottom: 25px;
+}
+
+.MovieDetailPage-contents-wrapper {
+  display: flex;
+  align-items: flex-start;
+}
+
+.MovieDetailPage-image {
+  width: 200px;
+}
+
+.MovieDetailPage-details {
+  margin-left: 25px;
+}
