@@ -13,7 +13,7 @@ function MovieDetailPage(props) {
         <img
           className="MovieDetailPage-image"
           src={props.movie.Poster}
-          alt={props.movie.title}
+          alt={props.movie.Title}
         />
         <div className="MovieDetailPage-details">
           <h1>{props.movie.Title}</h1>

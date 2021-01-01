@@ -1,7 +1,7 @@
 import React from 'react';
-import './MovieListPage.css';
 import Search from '../Search/Search';
-import MovieListElement from '../MovieListElement/MovieListElement';
+import MovieListItem from '../MovieListItem/MovieListItem';
+import './MovieListPage.css';
 class MovieListPage extends React.Component {
   constructor(props) {
     super(props);
@@ -14,23 +14,23 @@ class MovieListPage extends React.Component {
     this.setState({ filterText: value });
   };
 
-  handleSelectMovie = (movie) => {
-    this.props.onSelectMovie(movie);
+  handleSelectMovie = (imdbID) => {
+    this.props.onSelectMovie(imdbID);
   };
 
-  propertiesContainsFilterText(properties) {
-    const filterText = this.state.filterText.toLowerCase();
-    return properties.some((property) =>
-      property.toLowerCase().includes(filterText)
+  propertiesContainFilterText(propertiesArray) {
+    const lowercaseFilterText = this.state.filterText.toLowerCase();
+    return propertiesArray.some((property) =>
+      property.toLowerCase().includes(lowercaseFilterText)
     );
   }
 
   render() {
     const movieList = [];
     this.props.movies.forEach((movie) => {
-      if (this.propertiesContainsFilterText([movie.Title, movie.Plot])) {
+      if (this.propertiesContainFilterText([movie.Title, movie.Plot])) {
         movieList.push(
-          <MovieListElement
+          <MovieListItem
             key={movie.imdbID}
             movie={movie}
             onSelectMovie={this.handleSelectMovie}

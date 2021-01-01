@@ -1,19 +1,19 @@
-import './MovieListElement.css';
+import './MovieListItem.css';
 
-function MovieListElement(props) {
+function MovieListItem(props) {
   const handleSelectMovie = () => {
-    props.onSelectMovie(props.movie);
+    props.onSelectMovie(props.movie.imdbID);
   };
   return (
-    <article className="MovieListElement-wrapper">
+    <article className="MovieListItem-wrapper">
       <img
-        className="MovieListElement-image"
+        className="MovieListItem-image"
         src={props.movie.Poster}
         alt={props.movie.Title}
       />
 
-      <div className="MovieListElement-contents-wrapper">
-        <h1 className="MovieListElement-title">
+      <div className="MovieListItem-contents-wrapper">
+        <h1 className="MovieListItem-title">
           <a href="#" onClick={handleSelectMovie}>
             {props.movie.Title}
           </a>
@@ -27,4 +27,4 @@ function MovieListElement(props) {
   );
 }
 
-export default MovieListElement;
+export default MovieListItem;

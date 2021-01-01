@@ -7,25 +7,28 @@ import MovieDetailPage from '../MovieDetailPage/MovieDetailPage';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { movies: [], activePage: PAGE_TYPES.list };
+    this.state = {
+      movies: [],
+      activePage: PAGE_TYPES.list,
+    };
   }
 
-  handleSelectMovie = (movie) => {
+  handleSelectMovie = (imdbID) => {
     this.setState({
+      selectedMovieId: imdbID,
       activePage: PAGE_TYPES.detail,
-      selectedMovieId: movie.imdbID,
     });
   };
 
   clearSelectedMovie = () => {
     this.setState({
-      activePage: PAGE_TYPES.list,
       selectedMovieId: null,
+      activePage: PAGE_TYPES.list,
     });
   };
 
   fetchMovies = async () => {
-    const apiUrl = '../apiData.json';
+    const apiUrl = '/apiData.json';
 
     try {
       const res = await fetch(apiUrl);
@@ -44,18 +47,19 @@ class App extends React.Component {
     const selectedMovie = this.state.movies.find(
       (movie) => movie.imdbID === this.state.selectedMovieId
     );
+
     return (
       <main className="App-wrapper">
-        {this.state.activePage === PAGE_TYPES.detail && (
-          <MovieDetailPage
-            movie={selectedMovie}
-            onGoBack={this.clearSelectedMovie}
-          />
-        )}
         {this.state.activePage === PAGE_TYPES.list && (
           <MovieListPage
             movies={this.state.movies}
             onSelectMovie={this.handleSelectMovie}
+          />
+        )}
+        {this.state.activePage === PAGE_TYPES.detail && (
+          <MovieDetailPage
+            movie={selectedMovie}
+            onGoBack={this.clearSelectedMovie}
           />
         )}
       </main>
