@@ -1,7 +1,6 @@
 import React from 'react';
-import Search from '../Search/Search';
-import MovieListItem from '../MovieListItem/MovieListItem';
-import './MovieListPage.css';
+import Search from './Search';
+import MovieListItem from './MovieListItem';
 class MovieListPage extends React.Component {
   constructor(props) {
     super(props);
@@ -43,9 +42,14 @@ class MovieListPage extends React.Component {
       <>
         <Search onFilterTextChange={this.handleFilterTextChange} />
         {movieList.length ? (
-          movieList
+          <div className="flex flex-wrap -mx-4">{movieList}</div>
         ) : (
-          <p>Sorry, no results match your search terms.</p>
+          <div className="mt-4">
+            <p className="text-7xl text-center text-shamrock-500">:(</p>
+            <p className="mt-8 text-xl text-center">
+              Sorry, no results match your search terms.
+            </p>
+          </div>
         )}
       </>
     );

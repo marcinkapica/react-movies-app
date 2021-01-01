@@ -16,3 +16,9 @@
     @apply text-blue-600 underline;
   }
 }
+
+@layer components {
+  .btn-shamrock {
+    @apply py-2 px-4 bg-shamrock-500 text-white font-semibold rounded-lg hover:bg-shamrock-700 focus:outline-none focus:ring-2 focus:ring-shamrock-400 focus:ring-opacity-75;
+  }
+}

@@ -1,5 +1,3 @@
-import './Search.css';
-
 function Search(props) {
   const handleFilterTextChange = (e) => {
     props.onFilterTextChange(e.target.value);
@@ -10,9 +8,9 @@ function Search(props) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="Search-form">
+    <form onSubmit={handleSubmit} className="text-2xl">
       <input
-        className="Search-input"
+        className="w-full border-shamrock-500 border-solid border-2 rounded-lg px-4 py-1 focus:outline-none focus:ring-2 focus:ring-shamrock-400 focus:ring-opacity-75"
         type="text"
         placeholder="Search..."
         onChange={handleFilterTextChange}
