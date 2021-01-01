@@ -1,8 +1,7 @@
-import './App.css';
 import React from 'react';
-import PAGE_TYPES from '../../constants';
-import MovieListPage from '../MovieListPage/MovieListPage';
-import MovieDetailPage from '../MovieDetailPage/MovieDetailPage';
+import PAGE_TYPES from '../constants';
+import MovieListPage from './MovieListPage';
+import MovieDetailPage from './MovieDetailPage';
 
 class App extends React.Component {
   constructor(props) {
@@ -10,6 +9,7 @@ class App extends React.Component {
     this.state = {
       movies: [],
       activePage: PAGE_TYPES.list,
+      selectedMovieId: null,
     };
   }
 
@@ -49,7 +49,7 @@ class App extends React.Component {
     );
 
     return (
-      <main className="App-wrapper">
+      <main className="m-6">
         {this.state.activePage === PAGE_TYPES.list && (
           <MovieListPage
             movies={this.state.movies}
