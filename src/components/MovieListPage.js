@@ -17,26 +17,25 @@ class MovieListPage extends React.Component {
     this.props.onSelectMovie(imdbID);
   };
 
-  propertiesContainFilterText(propertiesArray) {
+  propertiesContainFilterText = (propertiesArray) => {
     const lowercaseFilterText = this.state.filterText.toLowerCase();
     return propertiesArray.some((property) =>
       property.toLowerCase().includes(lowercaseFilterText)
     );
-  }
+  };
 
   render() {
-    const movieList = [];
-    this.props.movies.forEach((movie) => {
-      if (this.propertiesContainFilterText([movie.Title, movie.Plot])) {
-        movieList.push(
-          <MovieListItem
-            key={movie.imdbID}
-            movie={movie}
-            onSelectMovie={this.handleSelectMovie}
-          />
-        );
-      }
-    });
+    const movieList = this.props.movies
+      .filter((movie) =>
+        this.propertiesContainFilterText([movie.Title, movie.Plot])
+      )
+      .map((movie) => (
+        <MovieListItem
+          key={movie.imdbID}
+          movie={movie}
+          onSelectMovie={this.handleSelectMovie}
+        />
+      ));
 
     return (
       <>
