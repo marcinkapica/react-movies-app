@@ -1,6 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Search from './Search';
 import MovieListItem from './MovieListItem';
+
 class MovieListPage extends React.Component {
   constructor(props) {
     super(props);
@@ -25,7 +27,8 @@ class MovieListPage extends React.Component {
   };
 
   render() {
-    const movieList = this.props.movies
+    const { movies } = this.props;
+    const movieList = movies
       .filter((movie) =>
         this.propertiesContainFilterText([movie.Title, movie.Plot])
       )
@@ -54,5 +57,17 @@ class MovieListPage extends React.Component {
     );
   }
 }
+
+MovieListPage.propTypes = {
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      imdbID: PropTypes.string,
+      Poster: PropTypes.string,
+      Title: PropTypes.string,
+      Plot: PropTypes.string,
+    })
+  ).isRequired,
+  onSelectMovie: PropTypes.func.isRequired,
+};
 
 export default MovieListPage;

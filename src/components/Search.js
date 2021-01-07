@@ -1,6 +1,9 @@
-function Search(props) {
+import React from 'react';
+import PropTypes from 'prop-types';
+
+function Search({ onFilterTextChange }) {
   const handleFilterTextChange = (e) => {
-    props.onFilterTextChange(e.target.value);
+    onFilterTextChange(e.target.value);
   };
 
   const handleSubmit = (e) => {
@@ -18,5 +21,9 @@ function Search(props) {
     </form>
   );
 }
+
+Search.propTypes = {
+  onFilterTextChange: PropTypes.func.isRequired,
+};
 
 export default Search;
