@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Search from './Search';
 import MovieListItem from './MovieListItem';
+
 class MovieListPage extends React.Component {
   constructor(props) {
     super(props);
@@ -29,7 +30,7 @@ class MovieListPage extends React.Component {
 
   render() {
     const { movies } = this.props;
-    
+
     const movieList = movies
       .filter((movie) =>
         this.propertiesContainFilterText([movie.Title, movie.Plot])
