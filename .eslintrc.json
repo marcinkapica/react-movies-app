@@ -21,13 +21,6 @@
         "prettier"
     ],
     "rules": {
-        "react/destructuring-assignment": [
-            "error",
-            "always",
-            {
-                "ignoreClassFields": true
-            }
-        ],
         "prettier/prettier": [
             "error",
             {
