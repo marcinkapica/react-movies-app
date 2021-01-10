@@ -28,13 +28,14 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm run lint"
+      "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
-    "src/**/*.{js,jsx}": ["npm run lint:fix"]
-  } ,
+    "src/**/*.{js,jsx}": [
+      "eslint"
+    ]
+  },
   "browserslist": {
     "production": [
       ">0.2%",
