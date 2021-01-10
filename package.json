@@ -27,8 +27,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "echo \"test [Husky] pre-commit\"",
-      "pre-push": "echo \"test [Husky] pre-push\""
+      "pre-commit": "npm run lint:fix",
+      "pre-push": "npm run lint"
     }
   },
   "browserslist": {
