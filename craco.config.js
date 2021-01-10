@@ -1,7 +1,10 @@
+const autoprefixerPlugin = require('autoprefixer');
+const tailwindcssPlugin = require('tailwindcss');
+
 module.exports = {
   style: {
     postcss: {
-      plugins: [require('autoprefixer'), require('tailwindcss')],
+      plugins: [autoprefixerPlugin, tailwindcssPlugin]
     },
   },
 };
