@@ -16,11 +16,13 @@ class MovieListPage extends React.Component {
   };
 
   handleSelectMovie = (imdbID) => {
-    this.props.onSelectMovie(imdbID);
+    const { onSelectMovie } = this.props;
+    onSelectMovie(imdbID);
   };
 
   propertiesContainFilterText = (propertiesArray) => {
-    const lowercaseFilterText = this.state.filterText.toLowerCase();
+    const { filterText } = this.state;
+    const lowercaseFilterText = filterText.toLowerCase();
     return propertiesArray.some((property) =>
       property.toLowerCase().includes(lowercaseFilterText)
     );
