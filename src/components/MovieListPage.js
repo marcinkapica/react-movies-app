@@ -30,7 +30,6 @@ class MovieListPage extends React.Component {
 
   render() {
     const { movies } = this.props;
-
     const movieList = movies
       .filter((movie) =>
         this.propertiesContainFilterText([movie.Title, movie.Plot])

@@ -23,8 +23,7 @@
     "test": "craco test",
     "eject": "react-scripts eject",
     "lint": "eslint 'src/**/*.{js,jsx}'",
-    "lint:fix": "npm run lint -- --fix",
-    "format:fix": "prettier --write 'src/**/*.{css,json}'"
+    "lint:fix": "npm run lint -- --fix"
   },
   "husky": {
     "hooks": {

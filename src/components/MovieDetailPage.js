@@ -5,6 +5,7 @@ function MovieDetailPage({ movie, onGoBack }) {
   const handleGoBack = () => {
     onGoBack();
   };
+
   return (
     <>
       <button className="btn-shamrock" onClick={handleGoBack} type="button">
