@@ -8,7 +8,7 @@ class MovieListPage extends React.Component {
     this.state = {
       filterText: '',
     };
-  
+    
   }
 
   handleFilterTextChange = (value) => {
