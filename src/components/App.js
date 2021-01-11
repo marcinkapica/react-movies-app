@@ -13,6 +13,10 @@ class App extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.fetchMovies();
+  }
+
   handleSelectMovie = (imdbID) => {
     this.setState({
       selectedMovieId: imdbID,
@@ -39,24 +43,21 @@ class App extends React.Component {
     }
   };
 
-  componentDidMount() {
-    this.fetchMovies();
-  }
-
   render() {
-    const selectedMovie = this.state.movies.find(
-      (movie) => movie.imdbID === this.state.selectedMovieId
+    const { movies, selectedMovieId, activePage } = this.state;
+    const selectedMovie = movies.find(
+      (movie) => movie.imdbID === selectedMovieId
     );
 
     return (
       <main className="m-6">
-        {this.state.activePage === PAGE_TYPES.list && (
+        {activePage === PAGE_TYPES.list && (
           <MovieListPage
-            movies={this.state.movies}
+            movies={movies}
             onSelectMovie={this.handleSelectMovie}
           />
         )}
-        {this.state.activePage === PAGE_TYPES.detail && (
+        {activePage === PAGE_TYPES.detail && (
           <MovieDetailPage
             movie={selectedMovie}
             onGoBack={this.clearSelectedMovie}
