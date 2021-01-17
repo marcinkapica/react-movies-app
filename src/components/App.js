@@ -1,15 +1,17 @@
 import React from 'react';
-import PAGE_TYPES from '../constants';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import MovieListPage from './MovieListPage';
 import MovieDetailPage from './MovieDetailPage';
+import NotFoundPage from './NotFoundPage';
+import API_ROOT_URL from '../constants';
+import Spinner from './Spinner';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       movies: [],
-      activePage: PAGE_TYPES.list,
-      selectedMovieId: null,
+      isLoading: true,
     };
   }
 
@@ -17,53 +19,37 @@ class App extends React.Component {
     this.fetchMovies();
   }
 
-  handleSelectMovie = (imdbID) => {
-    this.setState({
-      selectedMovieId: imdbID,
-      activePage: PAGE_TYPES.detail,
-    });
-  };
-
-  clearSelectedMovie = () => {
-    this.setState({
-      selectedMovieId: null,
-      activePage: PAGE_TYPES.list,
-    });
-  };
-
   fetchMovies = async () => {
-    const apiUrl = '/apiData.json';
+    const apiUrl = `${API_ROOT_URL}`;
 
     try {
       const res = await fetch(apiUrl);
       const data = await res.json();
-      this.setState({ movies: data });
+      this.setState({ movies: data, isLoading: false });
     } catch (e) {
       console.log('An error occurred:', e);
     }
   };
 
   render() {
-    const { movies, selectedMovieId, activePage } = this.state;
-    const selectedMovie = movies.find(
-      (movie) => movie.imdbID === selectedMovieId
-    );
-
+    const { movies, isLoading: loading } = this.state;
+    if (loading) return <Spinner />;
     return (
-      <main className="m-6">
-        {activePage === PAGE_TYPES.list && (
-          <MovieListPage
-            movies={movies}
-            onSelectMovie={this.handleSelectMovie}
-          />
-        )}
-        {activePage === PAGE_TYPES.detail && (
-          <MovieDetailPage
-            movie={selectedMovie}
-            onGoBack={this.clearSelectedMovie}
-          />
-        )}
-      </main>
+      <Router>
+        <main className="m-6">
+          <Switch>
+            <Route exact path="/">
+              <MovieListPage movies={movies} />
+            </Route>
+            <Route exact path="/movie/:id">
+              <MovieDetailPage />
+            </Route>
+            <Route>
+              <NotFoundPage />
+            </Route>
+          </Switch>
+        </main>
+      </Router>
     );
   }
 }

@@ -15,11 +15,6 @@ class MovieListPage extends React.Component {
     this.setState({ filterText: value });
   };
 
-  handleSelectMovie = (imdbID) => {
-    const { onSelectMovie } = this.props;
-    onSelectMovie(imdbID);
-  };
-
   propertiesContainFilterText = (propertiesArray) => {
     const { filterText } = this.state;
     const lowercaseFilterText = filterText.toLowerCase();
@@ -34,13 +29,7 @@ class MovieListPage extends React.Component {
       .filter((movie) =>
         this.propertiesContainFilterText([movie.Title, movie.Plot])
       )
-      .map((movie) => (
-        <MovieListItem
-          key={movie.imdbID}
-          movie={movie}
-          onSelectMovie={this.handleSelectMovie}
-        />
-      ));
+      .map((movie) => <MovieListItem key={movie.id} movie={movie} />);
 
     return (
       <>
@@ -63,13 +52,12 @@ class MovieListPage extends React.Component {
 MovieListPage.propTypes = {
   movies: PropTypes.arrayOf(
     PropTypes.shape({
-      imdbID: PropTypes.string,
-      Poster: PropTypes.string,
-      Title: PropTypes.string,
-      Plot: PropTypes.string,
+      id: PropTypes.string.isRequired,
+      Poster: PropTypes.string.isRequired,
+      Title: PropTypes.string.isRequired,
+      Plot: PropTypes.string.isRequired,
     })
   ).isRequired,
-  onSelectMovie: PropTypes.func.isRequired,
 };
 
 export default MovieListPage;

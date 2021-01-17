@@ -1,6 +1,3 @@
-const PAGE_TYPES = {
-  detail: 'detail',
-  list: 'list',
-};
+const API_ROOT_URL = 'http://localhost:8000/movies';
 
-export default PAGE_TYPES;
+export default API_ROOT_URL;
