@@ -12,8 +12,16 @@ The project was bootstrapped with [Create React App](https://github.com/facebook
 In the project directory run:
 
 ```cmd
-yarn start
+npm start
 ```
 
-This runs the app in the development mode.
+This starts the json-server and runs the app in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+## Useful scripts
+
+```cmd
+npm run lint
+```
+
+Checks all `.js` files in `src` folder against the ESLint rules and returns errors and warnings. This script is invoked before each push to git.
