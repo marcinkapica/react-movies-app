@@ -1,40 +1,25 @@
 import React from 'react';
+import { fetchMovies } from '../services/apiService';
 import Search from './Search';
 import MovieListItem from './MovieListItem';
 import Spinner from './Spinner';
-import API_ROOT_URL from '../constants';
 import ErrorNotification from './ErrorNotification';
 
 class MovieListPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading: true,
+      error: false,
       movies: [],
       filterText: '',
-      error: false,
-      isLoading: true,
     };
   }
 
-  componentDidMount() {
-    this.fetchMovies();
+  async componentDidMount() {
+    const { isLoading, error, data: movies } = await fetchMovies();
+    this.setState({ movies, error, isLoading });
   }
-
-  fetchMovies = async () => {
-    const moviesApiUrl = `${API_ROOT_URL}`;
-
-    try {
-      const res = await fetch(moviesApiUrl);
-      if (!res.ok) {
-        this.setState({ error: true, isLoading: false });
-        throw new Error('Incorrect response');
-      }
-      const data = await res.json();
-      this.setState({ movies: data, isLoading: false });
-    } catch (e) {
-      console.log('An error occurred:', e);
-    }
-  };
 
   handleFilterTextChange = (value) => {
     this.setState({ filterText: value });
@@ -50,19 +35,21 @@ class MovieListPage extends React.Component {
 
   render() {
     const { movies, error, isLoading } = this.state;
-    const movieList = movies
-      .filter((movie) =>
-        this.propertiesContainFilterText([movie.Title, movie.Plot])
-      )
-      .map((movie) => <MovieListItem key={movie.id} movie={movie} />);
 
     if (isLoading) return <Spinner />;
+
     if (error)
       return (
         <ErrorNotification>
           An error ocurred. Please try again later.
         </ErrorNotification>
       );
+
+    const movieList = movies
+      .filter((movie) =>
+        this.propertiesContainFilterText([movie.Title, movie.Plot])
+      )
+      .map((movie) => <MovieListItem key={movie.id} movie={movie} />);
 
     return (
       <>

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
-import API_ROOT_URL from '../constants';
+import { fetchMovie } from '../services/apiService';
 import NotFoundPage from './NotFoundPage';
 import Spinner from './Spinner';
 
@@ -15,30 +15,18 @@ class MovieDetailPage extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.fetchMovie();
-  }
-
-  fetchMovie = async () => {
+  async componentDidMount() {
     const { match } = this.props;
-    const movieApiUrl = `${API_ROOT_URL}/${match.params.id}`;
-
-    try {
-      const res = await fetch(movieApiUrl);
-      if (!res.ok) {
-        this.setState({ error: true, isLoading: false });
-        throw new Error('Incorrect response');
-      }
-      const data = await res.json();
-      this.setState({ movie: data, isLoading: false });
-    } catch (e) {
-      console.log('An error occurred:', e);
-    }
-  };
+    const { isLoading, error, data: movie } = await fetchMovie(match.params.id);
+    this.setState({ movie, error, isLoading });
+  }
 
   render() {
     const { movie, error, isLoading } = this.state;
-    const movieDetailsElement = (
+
+    if (isLoading) return <Spinner />;
+    if (error) return <NotFoundPage />;
+    return (
       <>
         <Link to="/">
           <button className="btn-shamrock" type="button">
@@ -62,10 +50,6 @@ class MovieDetailPage extends React.Component {
         </article>
       </>
     );
-
-    if (isLoading) return <Spinner />;
-    if (error) return <NotFoundPage />;
-    return movieDetailsElement;
   }
 }
 
