@@ -21,10 +21,10 @@ class MovieDetailPage extends React.Component {
 
   fetchMovie = async () => {
     const { match } = this.props;
-    const apiUrl = `${API_ROOT_URL}/${match.params.id}`;
+    const movieApiUrl = `${API_ROOT_URL}/${match.params.id}`;
 
     try {
-      const res = await fetch(apiUrl);
+      const res = await fetch(movieApiUrl);
       if (!res.ok) {
         this.setState({ error: true, isLoading: false });
         throw new Error('Incorrect response');
@@ -64,7 +64,8 @@ class MovieDetailPage extends React.Component {
     );
 
     if (isLoading) return <Spinner />;
-    return error ? <NotFoundPage /> : movieDetailsElement;
+    if (error) return <NotFoundPage />;
+    return movieDetailsElement;
   }
 }
 

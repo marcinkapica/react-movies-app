@@ -1,15 +1,40 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Search from './Search';
 import MovieListItem from './MovieListItem';
+import Spinner from './Spinner';
+import API_ROOT_URL from '../constants';
+import ErrorNotification from './ErrorNotification';
 
 class MovieListPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      movies: [],
       filterText: '',
+      error: false,
+      isLoading: true,
     };
   }
+
+  componentDidMount() {
+    this.fetchMovies();
+  }
+
+  fetchMovies = async () => {
+    const moviesApiUrl = `${API_ROOT_URL}`;
+
+    try {
+      const res = await fetch(moviesApiUrl);
+      if (!res.ok) {
+        this.setState({ error: true, isLoading: false });
+        throw new Error('Incorrect response');
+      }
+      const data = await res.json();
+      this.setState({ movies: data, isLoading: false });
+    } catch (e) {
+      console.log('An error occurred:', e);
+    }
+  };
 
   handleFilterTextChange = (value) => {
     this.setState({ filterText: value });
@@ -24,12 +49,20 @@ class MovieListPage extends React.Component {
   };
 
   render() {
-    const { movies } = this.props;
+    const { movies, error, isLoading } = this.state;
     const movieList = movies
       .filter((movie) =>
         this.propertiesContainFilterText([movie.Title, movie.Plot])
       )
       .map((movie) => <MovieListItem key={movie.id} movie={movie} />);
+
+    if (isLoading) return <Spinner />;
+    if (error)
+      return (
+        <ErrorNotification>
+          An error ocurred. Please try again later.
+        </ErrorNotification>
+      );
 
     return (
       <>
@@ -37,27 +70,13 @@ class MovieListPage extends React.Component {
         {movieList.length ? (
           <div className="flex flex-wrap -mx-4">{movieList}</div>
         ) : (
-          <div className="mt-4">
-            <p className="text-7xl text-center text-shamrock-500">:(</p>
-            <p className="mt-8 text-xl text-center">
-              Sorry, no results match your search terms.
-            </p>
-          </div>
+          <ErrorNotification>
+            Sorry, no results match your search terms.
+          </ErrorNotification>
         )}
       </>
     );
   }
 }
-
-MovieListPage.propTypes = {
-  movies: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      Poster: PropTypes.string.isRequired,
-      Title: PropTypes.string.isRequired,
-      Plot: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-};
 
 export default MovieListPage;

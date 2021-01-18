@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ErrorNotification from './ErrorNotification';
 
 const NotFoundPage = () => (
   <div>
@@ -9,12 +10,9 @@ const NotFoundPage = () => (
         Main page
       </button>
     </Link>
-    <div className="mt-4">
-      <p className="text-7xl text-center text-shamrock-500">:(</p>
-      <p className="mt-8 text-xl text-center">
-        404 - The page you are looking for could not be found
-      </p>
-    </div>
+    <ErrorNotification>
+      The page you are looking for could not be found
+    </ErrorNotification>
   </div>
 );
 
