@@ -1,71 +1,29 @@
 import React from 'react';
-import PAGE_TYPES from '../constants';
+import {
+  Route,
+  BrowserRouter as Router,
+  Switch,
+  Redirect,
+} from 'react-router-dom';
 import MovieListPage from './MovieListPage';
 import MovieDetailPage from './MovieDetailPage';
+import NotFoundPage from './NotFoundPage';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      movies: [],
-      activePage: PAGE_TYPES.list,
-      selectedMovieId: null,
-    };
-  }
-
-  componentDidMount() {
-    this.fetchMovies();
-  }
-
-  handleSelectMovie = (imdbID) => {
-    this.setState({
-      selectedMovieId: imdbID,
-      activePage: PAGE_TYPES.detail,
-    });
-  };
-
-  clearSelectedMovie = () => {
-    this.setState({
-      selectedMovieId: null,
-      activePage: PAGE_TYPES.list,
-    });
-  };
-
-  fetchMovies = async () => {
-    const apiUrl = '/apiData.json';
-
-    try {
-      const res = await fetch(apiUrl);
-      const data = await res.json();
-      this.setState({ movies: data });
-    } catch (e) {
-      console.log('An error occurred:', e);
-    }
-  };
-
-  render() {
-    const { movies, selectedMovieId, activePage } = this.state;
-    const selectedMovie = movies.find(
-      (movie) => movie.imdbID === selectedMovieId
-    );
-
-    return (
-      <main className="m-6">
-        {activePage === PAGE_TYPES.list && (
-          <MovieListPage
-            movies={movies}
-            onSelectMovie={this.handleSelectMovie}
-          />
-        )}
-        {activePage === PAGE_TYPES.detail && (
-          <MovieDetailPage
-            movie={selectedMovie}
-            onGoBack={this.clearSelectedMovie}
-          />
-        )}
-      </main>
-    );
-  }
-}
+const App = () => (
+  <Router>
+    <main className="m-6">
+      <Switch>
+        <Route exact path="/">
+          <MovieListPage />
+        </Route>
+        <Route exact path="/movie/:id">
+          <MovieDetailPage />
+        </Route>
+        <Route exact path="/404" component={NotFoundPage} />
+        <Redirect to="/404" />
+      </Switch>
+    </main>
+  </Router>
+);
 
 export default App;
