@@ -9,16 +9,18 @@ const getApiData = async (url) => {
 
   try {
     const res = await fetch(url);
-    if (!res.ok) {
+    const data = await res.json();
+    if (!res.ok || data.error) {
       responseObj.isLoading = false;
       responseObj.error = true;
-      throw new Error('Incorrect response');
+      throw new Error(
+        data.error || `A error occurred (error status: ${res.status})`
+      );
     }
-    const data = await res.json();
     responseObj.isLoading = false;
     responseObj.data = data;
   } catch (e) {
-    console.log('An error occurred:', e);
+    console.log(e.message);
   }
   return responseObj;
 };

@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import { fetchMovie } from '../services/apiService';
-import NotFoundPage from './NotFoundPage';
 import Spinner from './Spinner';
 
 class MovieDetailPage extends React.Component {
@@ -25,7 +24,8 @@ class MovieDetailPage extends React.Component {
     const { movie, error, isLoading } = this.state;
 
     if (isLoading) return <Spinner />;
-    if (error) return <NotFoundPage />;
+    if (error) return <Redirect to="/404" />;
+
     return (
       <>
         <Link to="/">
