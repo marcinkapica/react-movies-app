@@ -1,11 +1,10 @@
 # Project info
 
-A React app with a list of movies. Contains two pages:
+A React app with a list of movies. App features:
 
 - page with list of movies and a search field to filter the visible items
 - page with selected movie details
-
-The project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- redirection to `/404` page for not found urls
 
 ## How to run
 
@@ -25,3 +24,15 @@ npm run lint
 ```
 
 Checks all `.js` files in `src` folder against the ESLint rules and returns errors and warnings. This script is invoked before each push to git.
+
+## Notable dependencies:
+
+- [Create React App](https://github.com/facebook/create-react-app)
+- [tailwindcss](https://tailwindcss.com)
+- [react-router](https://www.npmjs.com/package/react-router)
+
+### Dev Dependencies
+
+- [husky](https://github.com/typicode/husky)
+- [ESLint](https://eslint.org/)
+- [Prettier](https://prettier.io/)
