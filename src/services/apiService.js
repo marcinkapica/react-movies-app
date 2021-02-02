@@ -1,11 +1,7 @@
-import API_ROOT_URL from '../constants';
+import { useEffect, useState } from 'react';
 
 const getApiData = async (url) => {
-  const responseObj = {
-    isLoading: true,
-    error: false,
-    data: null,
-  };
+  const responseObj = {};
 
   try {
     const res = await fetch(url);
@@ -25,10 +21,23 @@ const getApiData = async (url) => {
   return responseObj;
 };
 
-const fetchMovie = (movieId) => {
-  const movieApiUrl = `${API_ROOT_URL}/${movieId}`;
-  return getApiData(movieApiUrl);
+export const useFetchData = (url, initialData) => {
+  const [responseObj, setResponseObj] = useState({
+    isLoading: true,
+    error: false,
+    data: initialData,
+  });
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await getApiData(url);
+      setResponseObj(response);
+    }
+
+    fetchData();
+  }, [url]);
+  console.log(responseObj);
+  return responseObj;
 };
 
-const fetchMovies = () => getApiData(API_ROOT_URL);
-export { fetchMovie, fetchMovies };
+export default useFetchData;
