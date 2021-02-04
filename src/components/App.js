@@ -19,7 +19,9 @@ const App = () => (
         <Route exact path="/movie/:id">
           <MovieDetailPage />
         </Route>
-        <Route exact path="/404" component={NotFoundPage} />
+        <Route exact path="/404">
+          <NotFoundPage />
+        </Route>
         <Redirect to="/404" />
       </Switch>
     </main>
