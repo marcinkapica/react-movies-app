@@ -16,7 +16,7 @@ const getApiData = async (url) => {
     responseObj.isLoading = false;
     responseObj.data = data;
   } catch (e) {
-    console.log(e.message);
+    console.log(e.message); // eslint-disable-line no-console
   }
   return responseObj;
 };
@@ -36,7 +36,6 @@ export const useFetchData = (url, initialData) => {
 
     fetchData();
   }, [url]);
-  console.log(responseObj);
   return responseObj;
 };
 

@@ -4,20 +4,22 @@ import Search from './Search';
 import MovieListItem from './MovieListItem';
 import Spinner from './Spinner';
 import ErrorNotification from './ErrorNotification';
-import API_ROOT_URL from '../constants';
+import { API_ROOT_URL } from '../constants';
+import useUpdateTitle from '../effects/useUpdateTitle';
 
 const MovieListPage = () => {
+  useUpdateTitle();
+
   const { isLoading, error, data: movies } = useFetchData(API_ROOT_URL, []);
   const [filterText, setFilterText] = useState('');
-
   const handleFilterTextChange = (value) => {
     setFilterText(value);
   };
 
-  const propertiesContainFilterText = (propertiesArray) => {
-    const lowercaseFilterText = filterText.toLowerCase();
-    return propertiesArray.some((property) =>
-      property.toLowerCase().includes(lowercaseFilterText)
+  const arrayValuesContainText = (array, text) => {
+    const lowercaseFilterText = text.toLowerCase();
+    return array.some((value) =>
+      value.toLowerCase().includes(lowercaseFilterText)
     );
   };
 
@@ -32,7 +34,9 @@ const MovieListPage = () => {
   }
 
   const movieList = movies
-    .filter((movie) => propertiesContainFilterText([movie.Title, movie.Plot]))
+    .filter((movie) =>
+      arrayValuesContainText([movie.Title, movie.Plot], filterText)
+    )
     .map((movie) => <MovieListItem key={movie.id} movie={movie} />);
 
   return (

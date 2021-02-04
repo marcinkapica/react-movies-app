@@ -1,15 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Link, Redirect, withRouter } from 'react-router-dom';
+import { Link, Redirect, useParams } from 'react-router-dom';
+import { API_ROOT_URL } from '../constants';
+import useUpdateTitle from '../effects/useUpdateTitle';
 import { useFetchData } from '../services/apiService';
 import Spinner from './Spinner';
-import API_ROOT_URL from '../constants';
 
-const MovieDetailPage = ({ match }) => {
+const MovieDetailPage = () => {
+  const { id } = useParams();
   const { isLoading, error, data: movie } = useFetchData(
-    `${API_ROOT_URL}/${match.params.id}`,
+    `${API_ROOT_URL}/${id}`,
     {}
   );
+
+  useUpdateTitle(movie?.Title);
 
   if (isLoading) return <Spinner />;
   if (error) return <Redirect to="/404" />;
@@ -36,12 +39,4 @@ const MovieDetailPage = ({ match }) => {
   );
 };
 
-MovieDetailPage.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-    }),
-  }).isRequired,
-};
-
-export default withRouter(MovieDetailPage);
+export default MovieDetailPage;
